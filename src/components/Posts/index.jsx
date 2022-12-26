@@ -17,6 +17,6 @@ export const Posts = ({ posts = []}) => {
 }
 
 // key={post.id}
-//         post={post}
+// post={post}
 
 
