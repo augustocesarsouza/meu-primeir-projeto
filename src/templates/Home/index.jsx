@@ -15,17 +15,8 @@ export const Home = () => {
   const [postsPerPage] = useState(2)
   const [searchValue, setSearchValue] = useState('')
 
-  const noMorePosts = page + postsPerPage >= allPosts.length;
-
-  const filteredPosts = !!searchValue ?
-    allPosts.filter(post => {
-      return post.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
-    })
-    : posts;
-
-    //lidar com postes de carga
+  //lidar com postes de carga
     const handleLoadPosts = useCallback(async (page, postsPerPage) => {
-
     const postsAndPhotos = await loadPosts()
 
     setPosts(postsAndPhotos.slice(page, postsPerPage))
@@ -48,9 +39,16 @@ export const Home = () => {
   // lidar com mudança
   const handleChange = (e) => {
     const {value} = e.target
-
     setSearchValue(value)
   }
+
+  const noMorePosts = page + postsPerPage >= allPosts.length;
+
+  const filteredPosts = searchValue ?
+    allPosts.filter(post => {
+      return post.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
+    })
+    : posts;
 
   return (
     <section className="container">
