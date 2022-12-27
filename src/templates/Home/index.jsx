@@ -8,25 +8,25 @@ import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
 
 export const Home = () => {
-    
+
   const [posts, setPosts] = useState([])
   const [allPosts, setAllPosts] = useState([])
   const [page, setPage] = useState(0)
   const [postsPerPage] = useState(2)
   const [searchValue, setSearchValue] = useState('')
-  
+
   const noMorePosts = page + postsPerPage >= allPosts.length;
 
-  const filteredPosts = !!searchValue ? 
+  const filteredPosts = !!searchValue ?
     allPosts.filter(post => {
       return post.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
     })
     : posts;
 
     //lidar com postes de carga
-    const handleLoadPosts = useCallback(async (page, postsPerPage) => { 
-                          
-    const postsAndPhotos = await loadPosts() 
+    const handleLoadPosts = useCallback(async (page, postsPerPage) => {
+
+    const postsAndPhotos = await loadPosts()
 
     setPosts(postsAndPhotos.slice(page, postsPerPage))
     setAllPosts(postsAndPhotos)
@@ -41,14 +41,14 @@ export const Home = () => {
     const nextPage = page + postsPerPage
     const nextPosts = allPosts.slice(nextPage, nextPage + postsPerPage)
     posts.push(...nextPosts)
-    
+
     setPosts(posts)
     setPage(nextPage)
   }
   // lidar com mudança
   const handleChange = (e) => {
     const {value} = e.target
-    
+
     setSearchValue(value)
   }
 
@@ -68,7 +68,7 @@ export const Home = () => {
       {filteredPosts.length === 0 && (
        <p>Não existem posts =(</p>
       )}
-      
+
       <div className='button-container'>
         {!searchValue && (
           <Button
